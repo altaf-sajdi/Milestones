@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume-Builder</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+
+    <form id="Resume-Form" onsubmit="generateFile(event)" style="max-width: 600px; margin: auto;">
+        <fieldset style="padding: 15px; border: 2px solid #ccc; margin-bottom: 20px;">
+            <legend style="font-weight: bold;">UserName</legend>
+            <input type="text" id="UserName" placeholder="Enter Your Name" required style="width: 100%; padding: 8px; margin-top: 10px;"><br><br>
+
+            <legend style="font-weight: bold;">Personal Information</legend><br><br>
+            <label for="photo">Upload Photo</label><br>
+            <input type="file" id="photo" name="photo" required style="margin-top: 5px;"><br><br>
+
+            <label for="name">Full Name:</label><br>
+            <input type="text" id="name" name="name" required style="width: 100%; padding: 8px;"><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required style="width: 100%; padding: 8px;"><br><br>
+
+            <label for="phone">Mobile Number:</label><br>
+            <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 8px;">
+        </fieldset>
+
+        <fieldset style="padding: 15px; border: 2px solid #ccc; margin-bottom: 20px;">
+            <legend style="font-weight: bold;">Education</legend>
+            <label for="degree">Degree:</label><br>
+            <input type="text" id="degree" name="degree" required style="width: 100%; padding: 8px;"><br><br>
+            <label for="Education">Field of Education:</label><br>
+            <input type="text" id="Education" name="Education" required style="width: 100%; padding: 8px;">
+        </fieldset>
+
+        <fieldset style="padding: 15px; border: 2px solid #ccc; margin-bottom: 20px;">
+            <legend style="font-weight: bold;">Work Experience</legend>
+            <label for="job-title">Job Title:</label><br>
+            <input type="text" id="job-title" name="job-title" required style="width: 100%; padding: 8px;"><br><br>
+            
+            <label for="company">Company:</label><br>
+            <input type="text" id="company" name="company" required style="width: 100%; padding: 8px;"><br><br>
+            
+            <label for="years-of-experience">Years of Experience:</label><br>
+            <input type="number" id="years-of-experience" name="years-of-experience" min="0" required style="width: 100%; padding: 8px;"><br><br>
+            
+            <label for="description">Job Description:</label><br>
+            <textarea id="description" name="description" rows="4" cols="50" placeholder="Describe your role and responsibilities..." style="width: 100%; padding: 8px;"></textarea><br>
+        </fieldset>
+
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; font-size: 16px;">
+            Submit & Generate File
+        </button>
+    </form>
+
+    <script>
+        function generateFile(event) {
+            event.preventDefault(); // Prevent the form from submitting traditionally
+
+            // Gather form data
+            const userName = document.getElementById('UserName').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const degree = document.getElementById('degree').value;
+            const education = document.getElementById('Education').value;
+            const jobTitle = document.getElementById('job-title').value;
+            const company = document.getElementById('company').value;
+            const yearsOfExperience = document.getElementById('years-of-experience').value;
+            const description = document.getElementById('description').value;
+
+            // Create file content
+            const content = `
+                User Name: ${userName}
+                Full Name: ${name}
+                Email: ${email}
+                Mobile Number: ${phone}
+
+                Education:
+                Degree: ${degree}
+                Field of Education: ${education}
+
+                Work Experience:
+                Job Title: ${jobTitle}
+                Company: ${company}
+                Years of Experience: ${yearsOfExperience}
+                Job Description: ${description}
+            `;
+
+            // Create a blob for the content and generate a downloadable link
+            const blob = new Blob([content], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'resume.txt';
+            link.click();
+        }
+    </script>
+</body>
+</html>
